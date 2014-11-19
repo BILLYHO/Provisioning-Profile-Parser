@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F8A286AE-070A-45A4-811D-19BA5E1EB7D3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>provisioning</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6076F186D41695C3DC7279221F108CFDCB23DE13</key>
+		<string>https://github.com/BILLYHO/Provisioning-Profile-Parser.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>provisioning.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6076F186D41695C3DC7279221F108CFDCB23DE13</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/BILLYHO/Provisioning-Profile-Parser.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6076F186D41695C3DC7279221F108CFDCB23DE13</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6076F186D41695C3DC7279221F108CFDCB23DE13</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Provisioning%20Profile%20Parser</string>
+		</dict>
+	</array>
+</dict>
+</plist>

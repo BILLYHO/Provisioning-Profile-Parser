@@ -12,14 +12,15 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
 	[super viewDidLoad];
 
 	// Do any additional setup after loading the view.
 	
 	//Get the provisoning profile directory
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *docDir = [NSString stringWithFormat: @"/Users/%@/Library/MobileDevice/Provisioning\ Profiles/", NSUserName()];
+	NSString *docDir = [NSString stringWithFormat: @"/Users/%@/Library/MobileDevice/Provisioning Profiles/", NSUserName()];
 	
 	//Get a list of provisoning profile name
 	NSArray *fileList = [[NSArray alloc] init];
@@ -28,19 +29,60 @@
 	
 	//Parse every provisonng profile
 	_dataArray = [[NSMutableArray alloc] init];
-	for (NSString *fileName in fileList)
+	for (int i=0; i<fileList.count; i++)
 	{
-		[self parseWithPath:[docDir stringByAppendingString:fileName]];
+		NSMutableDictionary *dic = [self parseWithPath:[docDir stringByAppendingString:fileList[i]] atIndex:@(i+1)];
+		[_dataArray addObject:dic];
 	}
 	
-	_listTableView.dataSource = self;
-	_listTableView.delegate = self;
-	[_listTableView reloadData];
+	//Initialize TableView
+	[self initTableView];
+	
 }
 
 - (void)setRepresentedObject:(id)representedObject {
 	[super setRepresentedObject:representedObject];
 	// Update the view, if already loaded.
+}
+
+
+- (void)initTableView
+{
+	_listTableView.dataSource = self;
+	_listTableView.delegate = self;
+	[_listTableView reloadData];
+	
+	NSTableColumn *tableColumn = [_listTableView tableColumnWithIdentifier:@"IndexColumn"];
+	NSSortDescriptor *indexColumnSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Index"
+																				ascending:YES
+																				 selector:@selector(compare:)];
+	[tableColumn setSortDescriptorPrototype:indexColumnSortDescriptor];
+
+	
+	tableColumn = [_listTableView tableColumnWithIdentifier:@"AppIdColumn"];
+	NSSortDescriptor *appIdColumnSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"AppIDName"
+																				ascending:YES
+																				 selector:@selector(localizedCompare:)];
+	[tableColumn setSortDescriptorPrototype:appIdColumnSortDescriptor];
+	
+	tableColumn = [_listTableView tableColumnWithIdentifier:@"TypeColumn"];
+	NSSortDescriptor *typeColumnSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Type"
+																			   ascending:NO
+																				selector:@selector(localizedCompare:)];
+	[tableColumn setSortDescriptorPrototype:typeColumnSortDescriptor];
+	
+	tableColumn = [_listTableView tableColumnWithIdentifier:@"IdentifierColumn"];
+	NSSortDescriptor *identifierColumnSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Identifier"
+																			   ascending:YES
+																					  selector:@selector(localizedCompare:)];
+	[tableColumn setSortDescriptorPrototype:identifierColumnSortDescriptor];
+	
+	tableColumn = [_listTableView tableColumnWithIdentifier:@"TeamNameColumn"];
+	NSSortDescriptor *teamNameColumnSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"TeamName"
+																				   ascending:YES
+																					selector:@selector(localizedCompare:)];
+	[tableColumn setSortDescriptorPrototype:teamNameColumnSortDescriptor];
+
 }
 
 #pragma NSTableView DataSourse
@@ -52,6 +94,14 @@
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
 	return 20.0f;
+}
+
+-(void)tableView:(NSTableView *)tableView sortDescriptorsDidChange: (NSArray *)oldDescriptors
+{
+	
+	NSArray *newDescriptors = [tableView sortDescriptors];//@[typeColumnSortDescriptor];
+	[_dataArray sortUsingDescriptors:newDescriptors];
+	[tableView reloadData];
 }
 
 #pragma NSTableView Delegate
@@ -68,23 +118,17 @@
  
 	// There is no existing cell to reuse so create a new one
 	if (result == nil) {
-		
-		// Create the new NSTextField with a frame of the {0,0} with the width of the table.
-		// Note that the height of the frame is not really relevant, because the row height will modify the height.
-		result = [[NSTextField alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+		result = [[NSTextField alloc] init];
 		
 		// The identifier of the NSTextField instance is set to MyView.
 		// This allows the cell to be reused.
 		result.identifier = @"MyView";
 	}
  
-	// result is now guaranteed to be valid, either as a reused cell
-	// or as a new cell, so set the stringValue of the cell to the
-	// nameArray value at row
 	
-	if ([tableColumn.identifier isEqualToString: @"NumberColumn"])
+	if ([tableColumn.identifier isEqualToString: @"IndexColumn"])
 	{
-		result.stringValue = [NSString stringWithFormat:@"%ld", (long)row];
+		result.stringValue = [_dataArray[row] objectForKey:@"Index"];
 	}
 	else if([tableColumn.identifier isEqualToString: @"AppIdColumn"])
 	{
@@ -92,11 +136,11 @@
 	}
 	else if([tableColumn.identifier isEqualToString: @"TypeColumn"] )
 	{
-		result.stringValue = [_dataArray[row] objectForKey:@"type"];
+		result.stringValue = [_dataArray[row] objectForKey:@"Type"];
 	}
 	else if ([tableColumn.identifier isEqualToString: @"IdentifierColumn"])
 	{
-		result.stringValue = [_dataArray[row] objectForKey:@"identifier"];
+		result.stringValue = [_dataArray[row] objectForKey:@"Identifier"];
 	}
 	else if ([tableColumn.identifier isEqualToString: @"TeamNameColumn"])
 	{
@@ -106,13 +150,13 @@
 	result.backgroundColor = [NSColor clearColor];
 	[result setBordered:NO];
 	result.editable = NO;
-	// Return the result
+	
 	return result;
  
 }
 
 #pragma Provisoning profile parser
-- (int) parseWithPath:(NSString *)path
+- (NSMutableDictionary *) parseWithPath:(NSString *)path atIndex:(NSNumber*)index
 {
 	CMSDecoderRef decoder = NULL;
 	CFDataRef dataRef = NULL;
@@ -120,7 +164,7 @@
 	NSDictionary *plist = nil;
 	
 	NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-	
+	[dic setObject:index forKey:@"Index"];
 	@try
 	{
 		CMSDecoderCreate(&decoder);
@@ -146,49 +190,50 @@
 	{
 		if ([[plist valueForKeyPath:@"Entitlements.get-task-allow"] boolValue])
 		{
-			[dic setValue:@"debug" forKey:@"type"];
-			printf("debug\n");
+			[dic setObject:@"Debug" forKey:@"Type"];
+			printf("Debug\n");
 		}
 		else
 		{
-			[dic setValue:@"ad-hoc" forKey:@"type"];
-			printf("ad-hoc\n");
+			[dic setObject:@"Ad-Hoc" forKey:@"Type"];
+			printf("Ad-Hoc\n");
 		}
 	}
 	else if ([[plist valueForKeyPath:@"ProvisionsAllDevices"] boolValue])
 	{
-		[dic setValue:@"enterprise" forKey:@"type"];
-		printf("enterprise\n");
+		[dic setObject:@"Enterprise" forKey:@"Type"];
+		printf("Enterprise\n");
 	}
 	else
 	{
-		[dic setValue:@"appstore" forKey:@"type"];
-		printf("appstore\n");
+		[dic setObject:@"Appstore" forKey:@"Type"];
+		printf("Appstore\n");
 	}
 	
 	if ([plist valueForKey:@"AppIDName"])
 	{
-		[dic setValue:[plist valueForKey:@"AppIDName"] forKey:@"AppIDName"];
+		[dic setObject:[plist valueForKey:@"AppIDName"] forKey:@"AppIDName"];
 		printf("%s\n", [[plist valueForKey:@"AppIDName"] UTF8String]);
 	}
 
 	
 	NSString *applicationIdentifier = [plist valueForKeyPath:@"Entitlements.application-identifier"];
 	NSString *prefix = [[[plist valueForKeyPath:@"ApplicationIdentifierPrefix"] objectAtIndex:0] stringByAppendingString:@"."];
-	[dic setValue:[applicationIdentifier stringByReplacingOccurrencesOfString:prefix withString:@""] forKey:@"identifier"];
-	printf("%s\n", [[applicationIdentifier stringByReplacingOccurrencesOfString:prefix withString:@""] UTF8String]);
+	NSString *indentifier = [applicationIdentifier stringByReplacingOccurrencesOfString:prefix withString:@""];
+	[dic setObject:indentifier forKey:@"Identifier"];
+	printf("%s\n", [indentifier UTF8String]);
 	
 	
 
 	if ([plist valueForKey:@"TeamName"])
 	{
-		[dic setValue:[plist valueForKey:@"TeamName"] forKey:@"TeamName"];
+		[dic setObject:[plist valueForKey:@"TeamName"] forKey:@"TeamName"];
 		printf("%s\n", [[plist valueForKey:@"TeamName"] UTF8String]);
 	}
 
 	
-	[_dataArray addObject:dic];
-	return 0;
+	
+	return dic;
 }
 
 @end

@@ -105,11 +105,6 @@
 }
 
 #pragma NSTableView Delegate
--(void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-	NSLog(@"%ld",(long)[[notification object] selectedRow]);
-}
-
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
  
@@ -155,6 +150,31 @@
  
 }
 
+-(void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+	NSLog(@"%ld",(long)[[notification object] selectedRow]);
+}
+
+- (IBAction)didExportButtonClicked:(id)sender
+{
+	//NSLog(@"%ld", (long)[_listTableView selectedRow]);
+	//NSLog(@"%@", [_dataArray[[_listTableView selectedRow]] objectForKey:@"Entitlements"]);
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	
+	[savePanel setAllowedFileTypes:@[@"plist"]];
+	[savePanel setNameFieldStringValue:@"Entitlements"];
+	[savePanel setTitle:@"Export Entitlements Plist"];
+	
+	
+	NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:[_dataArray[[_listTableView selectedRow]] objectForKey:@"Entitlements"] format:NSPropertyListXMLFormat_v1_0 options:NSPropertyListImmutable error:nil];
+	
+	if ([savePanel runModal] == NSModalResponseOK)
+	{
+		[plistData writeToURL:[savePanel URL] atomically:YES];
+	}
+	
+}
+
 #pragma Provisoning profile parser
 - (NSMutableDictionary *) parseWithPath:(NSString *)path atIndex:(NSNumber*)index
 {
@@ -185,7 +205,15 @@
 		if (dataRef) CFRelease(dataRef);
 	}
  
-
+	
+	NSLog(@"%@", [plist valueForKey:@"DeveloperCertificates"]);
+	
+	if([plist valueForKeyPath:@"Entitlements"])
+	{
+		[dic setObject:[plist valueForKeyPath:@"Entitlements"] forKey:@"Entitlements"];
+	}
+	
+	
 	if ([plist valueForKeyPath:@"ProvisionedDevices"])
 	{
 		if ([[plist valueForKeyPath:@"Entitlements.get-task-allow"] boolValue])

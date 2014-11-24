@@ -12,6 +12,8 @@
 
 @property (strong) IBOutlet NSTableView *listTableView;
 
+@property (strong) IBOutlet NSButton *exportButton;
+
 @property (strong, nonatomic) NSMutableArray *dataArray;
 
 @end

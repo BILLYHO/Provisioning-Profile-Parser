@@ -669,11 +669,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="974" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="879" height="481"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VK2-ur-avC">
-                                <rect key="frame" x="0.0" y="0.0" width="974" height="574"/>
+                                <rect key="frame" x="0.0" y="28" width="879" height="453"/>
                                 <clipView key="contentView" ambiguous="YES" misplaced="YES" id="lTb-a4-fuA">
                                     <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -684,7 +684,7 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="IndexColumn" width="56" minWidth="40" maxWidth="60" id="d8F-rG-jep">
+                                                <tableColumn identifier="IndexColumn" width="40" minWidth="40" maxWidth="60" id="d8F-rG-jep">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="序号">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -698,7 +698,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="6XZ-yz-wY1">
-                                                            <rect key="frame" x="5" y="1" width="50" height="17"/>
+                                                            <rect key="frame" x="5" y="1" width="40" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MKz-WI-2HY">
@@ -716,7 +716,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="AppIdColumn" width="206" minWidth="100" maxWidth="300" id="a7E-e9-SK0">
+                                                <tableColumn identifier="AppIdColumn" width="173" minWidth="100" maxWidth="300" id="a7E-e9-SK0">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="APPID">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -730,7 +730,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="mXx-bT-khA">
-                                                            <rect key="frame" x="65" y="1" width="200" height="17"/>
+                                                            <rect key="frame" x="55" y="1" width="173" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fMu-cl-xUh">
@@ -781,7 +781,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="IdentifierColumn" width="306" minWidth="200" maxWidth="400" id="0Ye-98-8z1">
+                                                <tableColumn identifier="IdentifierColumn" width="280" minWidth="200" maxWidth="400" id="0Ye-98-8z1">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Identifier">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -795,7 +795,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="g3v-NB-bI2">
-                                                            <rect key="frame" x="385" y="1" width="300" height="17"/>
+                                                            <rect key="frame" x="348" y="1" width="280" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mhE-1d-f8z">
@@ -813,7 +813,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="TeamNameColumn" width="256" minWidth="200" maxWidth="400" id="Bqh-ah-NmO">
+                                                <tableColumn identifier="TeamNameColumn" width="236" minWidth="200" maxWidth="400" id="Bqh-ah-NmO">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="TeamName">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -827,7 +827,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="GSy-6G-rWZ">
-                                                            <rect key="frame" x="695" y="1" width="250" height="17"/>
+                                                            <rect key="frame" x="638" y="1" width="236" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tk1-TA-Q8X">
@@ -863,15 +863,26 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drl-OT-d1P">
+                                <rect key="frame" x="14" y="-2" width="81" height="32"/>
+                                <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zaf-92-PA3">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="didExportButtonClicked:" target="XfG-lQ-9wD" id="ZFO-Y8-1v1"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="exportButton" destination="drl-OT-d1P" id="tYp-5m-vTT"/>
                         <outlet property="listTableView" destination="TOb-dh-aFG" id="pje-Yj-H5O"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="804"/>
+            <point key="canvasLocation" x="222.5" y="757.5"/>
         </scene>
     </scenes>
 </document>

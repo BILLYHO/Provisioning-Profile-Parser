@@ -20,7 +20,7 @@
 	
 	//Get the provisoning profile directory
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *docDir = [NSString stringWithFormat: @"/Users/%@/Library/MobileDevice/Provisioning Profiles/", NSUserName()];
+	NSString *docDir = [NSHomeDirectory() stringByAppendingPathComponent: @"Library/MobileDevice/Provisioning Profiles"];
 	
 	//Get a list of provisoning profile name
 	NSArray *fileList = [[NSArray alloc] init];
@@ -29,10 +29,15 @@
 	
 	//Parse every provisonng profile
 	_dataArray = [[NSMutableArray alloc] init];
-	for (int i=0; i<fileList.count; i++)
+	int i = 1;
+	for (NSString *filePath in fileList)
 	{
-		NSMutableDictionary *dic = [self parseWithPath:[docDir stringByAppendingString:fileList[i]] atIndex:@(i+1)];
-		[_dataArray addObject:dic];
+		if ([[filePath pathExtension] isEqualTo:@"mobileprovision"])
+		{
+			NSMutableDictionary *dic = [self parseWithPath:[docDir stringByAppendingPathComponent:filePath] atIndex:@(i)];
+			[_dataArray addObject:dic];
+			i++;
+		}
 	}
 	
 	//Initialize TableView
@@ -206,7 +211,7 @@
 	}
  
 	
-	NSLog(@"%@", [plist valueForKey:@"DeveloperCertificates"]);
+	//NSLog(@"%@", [plist valueForKey:@"DeveloperCertificates"]);
 	
 	if([plist valueForKeyPath:@"Entitlements"])
 	{
@@ -219,48 +224,46 @@
 		if ([[plist valueForKeyPath:@"Entitlements.get-task-allow"] boolValue])
 		{
 			[dic setObject:@"Debug" forKey:@"Type"];
-			printf("Debug\n");
+			//printf("Debug\n");
 		}
 		else
 		{
 			[dic setObject:@"Ad-Hoc" forKey:@"Type"];
-			printf("Ad-Hoc\n");
+			//printf("Ad-Hoc\n");
 		}
 	}
 	else if ([[plist valueForKeyPath:@"ProvisionsAllDevices"] boolValue])
 	{
 		[dic setObject:@"Enterprise" forKey:@"Type"];
-		printf("Enterprise\n");
+		//printf("Enterprise\n");
 	}
 	else
 	{
 		[dic setObject:@"Appstore" forKey:@"Type"];
-		printf("Appstore\n");
+		//printf("Appstore\n");
 	}
 	
 	if ([plist valueForKey:@"AppIDName"])
 	{
 		[dic setObject:[plist valueForKey:@"AppIDName"] forKey:@"AppIDName"];
-		printf("%s\n", [[plist valueForKey:@"AppIDName"] UTF8String]);
+		//printf("%s\n", [[plist valueForKey:@"AppIDName"] UTF8String]);
 	}
 
-	
-	NSString *applicationIdentifier = [plist valueForKeyPath:@"Entitlements.application-identifier"];
-	NSString *prefix = [[[plist valueForKeyPath:@"ApplicationIdentifierPrefix"] objectAtIndex:0] stringByAppendingString:@"."];
-	NSString *indentifier = [applicationIdentifier stringByReplacingOccurrencesOfString:prefix withString:@""];
-	[dic setObject:indentifier forKey:@"Identifier"];
-	printf("%s\n", [indentifier UTF8String]);
-	
-	
+	if ([plist valueForKeyPath:@"Entitlements.application-identifier"])
+	{
+		NSString *applicationIdentifier = [plist valueForKeyPath:@"Entitlements.application-identifier"];
+		NSString *prefix = [[[plist valueForKeyPath:@"ApplicationIdentifierPrefix"] objectAtIndex:0] stringByAppendingString:@"."];
+		NSString *indentifier = [applicationIdentifier stringByReplacingOccurrencesOfString:prefix withString:@""];
+		[dic setObject:indentifier forKey:@"Identifier"];
+		//printf("%s\n", [indentifier UTF8String]);
+	}
 
 	if ([plist valueForKey:@"TeamName"])
 	{
 		[dic setObject:[plist valueForKey:@"TeamName"] forKey:@"TeamName"];
-		printf("%s\n", [[plist valueForKey:@"TeamName"] UTF8String]);
+		//printf("%s\n", [[plist valueForKey:@"TeamName"] UTF8String]);
 	}
 
-	
-	
 	return dic;
 }
 
